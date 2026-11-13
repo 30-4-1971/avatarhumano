@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>LIVE Celestial</title>
+<style>
+*{box-sizing:border-box} html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#05051a;color:#fff;font-family:Arial,sans-serif}
+body{display:flex;align-items:center;justify-content:center}
+.live{position:relative;width:min(100vw,56.25vh);height:min(100vh,177.78vw);overflow:hidden;background:
+radial-gradient(circle at 50% 40%,#25205f 0,#111038 28%,#070822 60%,#020313 100%)}
+.stars{position:absolute;inset:0;background-image:
+radial-gradient(circle,#fff 0 1px,transparent 1.5px),
+radial-gradient(circle,#8eeaff 0 1px,transparent 1.5px);
+background-size:73px 91px,113px 127px;opacity:.7;animation:drift 18s linear infinite}
+@keyframes drift{to{transform:translateY(40px)}}
+.hud{position:absolute;left:5%;right:5%;top:4%;z-index:5;text-align:center}
+.badge{display:inline-block;padding:8px 14px;border:1px solid #73e8ff;border-radius:20px;background:#11184dcc;box-shadow:0 0 20px #38d9ff66;font-size:13px}
+.title{font-size:26px;font-weight:800;margin-top:12px;text-shadow:0 0 14px #65eaff}
+.sub{font-size:13px;opacity:.85;margin-top:5px}
+.avatar{position:absolute;left:50%;top:47%;transform:translate(-50%,-50%);width:78%;height:52%}
+.halo{position:absolute;left:50%;top:28%;transform:translate(-50%,-50%);width:64%;aspect-ratio:1;border-radius:50%;border:5px solid #65eaff88;box-shadow:0 0 35px #4ce7ff99, inset 0 0 25px #a04cff66;animation:pulse 2.5s ease-in-out infinite}
+@keyframes pulse{50%{transform:translate(-50%,-50%) scale(1.04);opacity:.75}}
+.head{position:absolute;left:50%;top:30%;transform:translate(-50%,-50%);width:38%;aspect-ratio:.82;border-radius:46% 46% 42% 42%;background:linear-gradient(150deg,#c6c8ff,#7775d5 48%,#3a286a);box-shadow:0 0 28px #61e8ff99}
+.head:before{content:"";position:absolute;left:12%;right:12%;top:45%;height:18%;border-top:3px solid #63eaff;transform:skewY(-18deg);box-shadow:0 10px #7f54ff}
+.eye{position:absolute;top:42%;width:19%;height:9%;background:#baffff;border-radius:50%;box-shadow:0 0 15px #56edff}
+.eye.l{left:20%}.eye.r{right:20%}
+.mouth{position:absolute;left:35%;top:66%;width:30%;height:7%;border-bottom:3px solid #fff;border-radius:0 0 50% 50%;animation:speak .8s ease-in-out infinite alternate}
+@keyframes speak{to{height:15%}}
+.body{position:absolute;left:50%;top:68%;transform:translateX(-50%);width:72%;height:48%;border-radius:50% 50% 10% 10%;background:radial-gradient(circle at 50% 15%,#b06cff,#214eaa 38%,#08102f 70%);box-shadow:0 0 50px #4ee9ff55}
+.body:after{content:"";position:absolute;inset:8%;border-radius:50%;background:repeating-linear-gradient(120deg,transparent 0 15px,#50eaff44 16px 18px);opacity:.7}
+.ring{position:absolute;left:50%;top:65%;transform:translate(-50%,-50%);width:92%;height:44%;border:3px solid #d7a04a99;border-radius:50%;box-shadow:0 0 25px #ffcb5a55}
+.chat{position:absolute;left:5%;right:5%;bottom:19%;z-index:6;display:flex;flex-direction:column;gap:7px}
+.msg{align-self:flex-start;max-width:92%;padding:8px 12px;border:1px solid #8d6cffaa;border-radius:18px;background:#120f3dcc;box-shadow:0 0 15px #724cff44;font-size:13px}
+.msg b{color:#8eeeff}.msg:nth-child(2){align-self:flex-end}
+.cta{position:absolute;left:5%;right:5%;bottom:6%;z-index:7;text-align:center;padding:12px;border-radius:22px;background:linear-gradient(90deg,#7b43ffcc,#00bfeacc);font-weight:800;box-shadow:0 0 25px #6c7cff66}
+.tap{font-size:11px;font-weight:normal;opacity:.9;margin-top:3px}
+</style>
+</head>
+<body>
+<div class="live">
+  <div class="stars"></div>
+  <div class="hud">
+    <div class="badge">✦ LIVE · MENSAJES EN DIRECTO</div>
+    <div class="title">Portal de Luz</div>
+    <div class="sub">Escribe tu mensaje en el chat</div>
+  </div>
+
+  <div class="avatar" aria-label="avatar animado">
+    <div class="halo"></div>
+    <div class="ring"></div>
+    <div class="head">
+      <div class="eye l"></div><div class="eye r"></div><div class="mouth"></div>
+    </div>
+    <div class="body"></div>
+  </div>
+
+  <div class="chat" id="chat">
+    <div class="msg"><b>@usuario</b> · ✦ ¿Puedes darme un mensaje?</div>
+    <div class="msg"><b>@estrella</b> · 💜 Quiero un mensaje para hoy</div>
+  </div>
+
+  <div class="cta">
+    ✨ ESCRIBE TU PREGUNTA EN EL CHAT ✨
+    <div class="tap">El personaje responderá con una lectura/mensaje diferente</div>
+  </div>
+</div>
+
+<script>
+const mensajes=[
+"Hay una nueva etapa acercándose. Confía en lo que estás construyendo.",
+"Hoy necesitas escuchar más a tu intuición y menos al ruido de los demás.",
+"Algo que parecía detenido empieza a moverse poco a poco.",
+"Tu mensaje de hoy es de calma: no todo necesita resolverse inmediatamente.",
+"Se abre una oportunidad para recuperar ilusión por algo que habías dejado atrás.",
+"Una conversación sincera puede ayudarte a ver una situación de otra manera."
+];
+let i=0;
+setInterval(()=>{
+ const chat=document.getElementById('chat');
+ const el=document.createElement('div');
+ el.className='msg';
+ el.innerHTML='<b>@mensaje_en_directo</b> · '+mensajes[i++%mensajes.length];
+ chat.appendChild(el);
+ while(chat.children.length>4) chat.removeChild(chat.firstChild);
+},5000);
+</script>
+</body>
+</html>
